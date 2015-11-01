@@ -1,2 +1,8 @@
 ---
 # handlers file for panxatony.ntp
+
+- name: Start NTP Service
+  service: state=started enabled=yes name={{ ntp_service }}
+
+- name: Sync NTP
+  command: ntpdate -u {{ ntpdate_server }}

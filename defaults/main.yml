@@ -1,2 +1,5 @@
 ---
 # defaults file for panxatony.ntp
+
+ntp_timezone: Europe/Berlin
+ntpdate_server: pool.ntp.org

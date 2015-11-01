@@ -1,0 +1,11 @@
+# For RedHat:
+ntp_package:
+      name: ntp
+      state: installed
+ntp_service: ntpd
+ntp_config: /etc/ntp.conf
+ntp_servers:
+   - 0.centos.pool.ntp.org iburst
+   - 1.centos.pool.ntp.org iburst
+   - 2.centos.pool.ntp.org iburst
+   - 3.centos.pool.ntp.org iburst
