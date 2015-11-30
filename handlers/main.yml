@@ -3,6 +3,10 @@
 
 - name: Start NTP Service
   service: state=started enabled=yes name={{ ntp_service }}
+  become: yes
+  become_user: root
 
 - name: Sync NTP
   command: ntpdate -u {{ ntpdate_server }}
+  become: yes
+  become_user: root
