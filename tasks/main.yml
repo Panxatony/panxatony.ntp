@@ -3,23 +3,37 @@
 
 - name: Include OS-specific variables
   include_vars: "{{ ansible_os_family }}.yml"
+  become: yes
+  become_user: root
+  tags:
+    - ntp
 
 - name: Set the correct timezone
   file: src=/usr/share/zoneinfo/{{ ntp_timezone }}  dest=/etc/localtime state=link force=yes
+  become: yes
+  become_user: root
+  tags:
+    - ntp
 
 - name: Install NTP (RedHat)
   yum: name={{ ntp_package.name }} state={{ ntp_package.state }}
   when: ansible_os_family == 'RedHat'
-
   notify:
     - Sync NTP
+  become: yes
+  become_user: root
+  tags:
+    - ntp
 
 - name: Install NTP (Debian)
   apt: name={{ ntp_package.name }} state={{ ntp_package.state }}
   when: ansible_os_family == 'Debian'
-
   notify:
     - Sync NTP
+  become: yes
+  become_user: root
+  tags:
+    - ntp
 
 - name: Configure NTP
   template: src={{ item }} dest={{ ntp_config }}
@@ -28,6 +42,9 @@
    - "../templates/{{ ansible_distribution }}.ntp.conf.j2"
    - "../templates/{{ ansible_os_family }}.ntp.conf.j2"
    - "../templates/ntp.conf.j2"
-
   notify:
     - Start NTP Service
+  become: yes
+  become_user: root
+  tags:
+    - ntp
